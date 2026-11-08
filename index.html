@@ -4,143 +4,331 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Calculator</title>
+    <link rel="stylesheet" href="index.css">
 </head>
 <style>
     * {
         box-sizing: border-box;
         margin: 0 auto;
-        text-shadow: 4px 4px 5px gray;
-        font-family: 'Lucida Sans',
-            'Lucida Sans Regular',
-            'Lucida Grande',
-            'Lucida Sans Unicode', Geneva,
-            Verdana, sans-serif;
-        color: aliceblue;
+        font-weight: bold;
     }
 
     body {
-        background-image: url("/INTRO/Home_drill/passwordbar/vida.jpg");
-        background-attachment: scroll;
-        background-position: center;
         background-size: cover;
+        background-position: center;
+        padding: 30px 0;
     }
 
-    main {
-        display: grid;
-        place-items: center;
-        box-shadow: -5px 5px 30px gray;
-        padding: 20px;
-        width: 90%;
-        background-color: rgba(0, 0, 0, 0.5);
-        margin: 35% auto;
-        border-radius: 20px;
-        gap: 20px;
-        height: 50vh;
-        font-size: 1.2em;
-    }
-
-    form {
+    .calcbody {
+        padding: 20px 0;
+        background-color: #000;
+        width: 95%;
         display: flex;
-        align-items: center;
-        gap: 20px;
         flex-direction: column;
+        gap: 20px;
+        height: 90vh;
+        border-radius: 50px;
     }
 
-    label {
-        font-weight: bold;
-        font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
-        color: aliceblue;
-        font-size: 23px;
-    }
-
-    .container {
-        height: 12px;
-        width: 100%;
-        border: none;
-        height: 25px;
-        background: transparent;
-        border-radius: 10px;
-    }
-
-    #bar {
-        height: 60%;
-        width: 0%;
-        background: red;
-        border-radius: 10px;
-        transition: 0.3s ease;
-    }
-
-    #bar.green {
-        background: green;
-    }
-
-    input {
-        border: none;
-        border-bottom: 2px solid white;
-        background-color: transparent;
-        padding: 20px 10px;
-        font-size: 1rem;
-        height: 30px;
-    }
-
-    input:focus {
-        outline: none;
-        background-color: transparent;
-    }
-
-    input::placeholder {
-        color: rgb(189, 182, 182);
-        text-align: center;
-        font-style: italic;
-    }
-
-    footer {
-        text-align: center;
-        color: black;
+    h1 {
         font-family: sans-serif;
+        background: radial-gradient(circle at 25% 30%, #909910, #12aed5);
+        border-radius: 10px;
+        padding: 5px 10px;
+        color: #dfd8d8;
+        font-size: 2em;
     }
 
-    @media (min-width: 768px) {
-        body {
-            background-image: url('vidafa1.jpg');
-            background-attachment: fixed;
-            background-position: center;
-            background-size: cover;
+    button {
+        transition: transform 180ms ease, background-color 180ms ease;
+    }
+
+    button:hover {
+        transform: scale(1.05);
+    }
+
+    button:active {
+        transform: scale(0.90);
+    }
+
+    .notch {
+        background-color: rgb(42, 41, 41);
+        border: 2px solid gray;
+        padding: 5px 40px;
+        border-radius: 10px;
+        width: 20%;
+    }
+
+    .screen {
+        background-color: rgb(42, 41, 41);
+        width: 90%;
+        border-radius: 10px;
+        border: 1px solid gray;
+        border-radius: 15px;
+        padding: 10px 15px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-evenly;
+        align-items: flex-end;
+        overflow: hidden;
+    }
+
+    .history {
+        color: rgba(255, 255, 255, 0.6);
+        font-size: 1.2rem;
+        height: 25px;
+        margin-bottom: 10px;
+        width: 100%;
+        text-align: right;
+        overflow: hidden;
+        font-style: italic;
+        font-family: monospace;
+    }
+
+    .display {
+        color: white;
+        font-size: 3rem;
+        font-weight: 300;
+        width: 100%;
+        text-align: right;
+        overflow: hidden;
+        font-family: monospace;
+        text-overflow: ellipsis;
+    }
+
+    .firstrow {
+        display: flex;
+        justify-content: space-between;
+        gap: 20px;
+        width: 90%;
+    }
+
+    .cbutton,
+    .delbutton {
+        padding: 7px 10px;
+        border-radius: 10px;
+        font-weight: bolder;
+        cursor: pointer;
+    }
+
+    .secondrow {
+        display: grid;
+        grid-template-columns: repeat(3, 100px);
+        gap: 15px;
+        font-size: 1.5em;
+    }
+
+    .number,
+    .solve {
+        font-size: 1.5em;
+        padding: 5px 20px;
+        border-radius: 15px;
+        cursor: pointer;
+    }
+
+    .number:hover,
+    .solve:hover,
+    .equals:hover,
+    .cbutton:hover,
+    .delbutton:hover {
+        background-color: #c8c8c8;
+    }
+
+    @media screen {
+
+        @media (max-width: 678px) {
+            .calcbody {
+                min-width: 95%;
+                height: 95vh;
+            }
         }
 
-        main {
-            margin: 11% auto;
+        @media (max-width: 1024px) {
+            .calcbody {
+                max-width: 60%;
+                height: 95vh;
+            }
+        }
+
+        @media (min-width: 1444px) {
+            .calcbody {
+                max-width: 40%;
+                height: 95vh;
+            }
+        }
+
+        @media (min-width: 1200px) {
+            .calcbody {
+                max-width: 50%;
+                height: 95vh;
+            }
         }
     }
 </style>
 
 <body>
-    <main>
-        <h2>PASSWORD METER</h2>
-        <form action="">
-            <label for="password">
-                Password
-            </label>
-            <input id="password" type="password" placeholder="enter password" maxlength="10">
-            <div class="container">
-                <div id="bar"></div>
-            </div>
-        </form>
-    </main>
-    <footer>
-        Powered by VIDAFA
-    </footer>
-    <script defer>
-        const password = document.querySelector("#password");
-        const bar = document.querySelector("#bar");
-        password.addEventListener("input", () => {
-            let point = password.value.length * 10;
-            if (point > 100)
-                point = 100;
-            bar.style.width = point + "%";
-            bar.classList.toggle("green", point >= 70);
+    <section class="calcbody">
+        <div class="notch"></div>
+        <div class="screen">
+            <div class="history" id="history"></div>
+            <div class="display" id="display">0</div>
+        </div>
+        <div class="firstrow">
+            <button class="cbutton">CLR</button>
+            <h1>codealpha</h1>
+            <button class="delbutton">DEL</button>
+        </div>
+        <div class="secondrow">
+            <button class="number b1">1</button>
+            <button class="number b2">2</button>
+            <button class="number b3">3</button>
+            <button class="number b4">4</button>
+            <button class="number b5">5</button>
+            <button class="number b6">6</button>
+            <button class="number b7">7</button>
+            <button class="number b8">8</button>
+            <button class="number b9">9</button>
+            <button class="solve bmul">x</button>
+            <button class="number bzero">0</button>
+            <button class="solve badd">+</button>
+            <button class="solve bmin">-</button>
+            <button class="solve bdiv">/</button>
+            <button class="solve bequ">=</button>
+        </div>
+    </section>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+
+            // calculator state
+            let currentInput = '0';
+            let previousInput = '';
+            let operation = null;
+            let shouldResetScreen = false;
+
+            // DOM manipulation
+            const display = document.getElementById('display');
+            const historyDisplay = document.getElementById('history');
+            const clearButton = document.querySelector('.cbutton');
+            const deleteButton = document.querySelector('.delbutton');
+            const equalsButton = document.querySelector('.bequ');
+            const numberButtons = document.querySelectorAll('.number');
+            const operatorButtons = document.querySelectorAll('.solve');
+
+            // calculator screen
+            const updateDisplay = () => {
+                display.textContent = currentInput;
+                historyDisplay.textContent = previousInput +
+                    (operation ? `${operation}` : "");
+                historyDisplay.textContent = previousInput;
+                historyDisplay.textContent = previousInput + (operation ? ` ${operation}` : "");
+            }
+
+            // reset calculator state
+            const resetCalculator = () => {
+                currentInput = '0';
+                previousInput = '';
+                operation = null;
+                shouldResetScreen = false;
+                updateDisplay();
+            }
+
+            // append numbers
+            const appendNumber = (number) => {
+                if (currentInput === '0' || shouldResetScreen) {
+                    currentInput = number;
+                    shouldResetScreen = false;
+                } else {
+                    currentInput += number;
+                }
+                updateDisplay();
+            }
+
+            // Choose operation
+            const chooseOperation = (operate) => {
+                if (currentInput === '') return;
+
+                if (previousInput !== '') {
+                    calculate();
+                }
+
+                operation = operate;
+                previousInput = `${currentInput} ${operate}`;
+                previousInput = `${currentInput}`;
+                shouldResetScreen = true;
+                updateDisplay();
+            }
+
+            // Calculate result
+            const calculate = () => {
+                if (operation === null || shouldResetScreen) return;
+
+                let computation;
+                const prev = parseFloat(previousInput);
+                const current = parseFloat(currentInput);
+
+                if (isNaN(prev) || isNaN(current))
+                    return;
+
+                switch (operation) {
+                    case '+':
+                        computation = prev + current;
+                        break;
+                    case '-':
+                        computation = prev - current;
+                        break;
+                    case 'x':
+                        computation = prev * current;
+                        break;
+                    case '/':
+                        if (current === 0) {
+                            alert("Can't divide by 0");
+                            return;
+                        }
+                        else {
+                            computation = prev / current;
+                        }
+                        break;
+                    default:
+                        return;
+                }
+                currentInput = computation.toString();
+                operation = null;
+                previousInput = '';
+                updateDisplay();
+            }
+
+            // delete last char
+            const deleteNumber = () => {
+                if (currentInput.length === 1) {
+                    currentInput = '0';
+                } else {
+                    currentInput = currentInput.slice(0, -1);
+                }
+                updateDisplay();
+            }
+
+            // Event listeners
+            clearButton.addEventListener('click', resetCalculator);
+            deleteButton.addEventListener('click', deleteNumber);
+            equalsButton.addEventListener('click', calculate);
+
+            numberButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    appendNumber(button.textContent);
+                });
+            });
+
+            operatorButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    chooseOperation(button.textContent);
+                });
+            });
+
+            // Initialize display
+            updateDisplay();
         });
+
     </script>
 </body>
 
